@@ -135,7 +135,7 @@ class LogDealer:
             if ans[i] == {}:
                 ans[i] = None
             else:
-                ans[i] = [ans[i]["start"], ans[i]["stop"]]
+                ans[i] = [ans[i]["start"], ans[i]["end"]]
         return ans
 
     # process log file line
@@ -152,7 +152,7 @@ class LogDealer:
 
 if __name__ == '__main__':
     log = LogDealer()
-    log.load_dirs("./log")
+    log.load_dirs()
     t = log.get_output()
     print(t)
     # print
