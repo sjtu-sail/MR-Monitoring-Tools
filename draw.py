@@ -10,7 +10,8 @@ from log_deal2 import LogDealer
 import sys
 import getopt
 import time
-
+import os
+OUT_DIR='./output_pic'
 
 class ExecutedDraw:
     waves_color = ["blue"]
@@ -61,7 +62,6 @@ class ExecutedDraw:
                             tasknum = self.count
                             self.map_id_num[taskid] = tasknum
                             self.count += 1
-                            print self.count
                         self.map_draw(tasknum, phase_list["map"])
                         self.shuffle_draw(tasknum, phase_list["shuffle"])
                         self.reduce_draw(tasknum, phase_list["reduce"])
@@ -81,7 +81,10 @@ class ExecutedDraw:
                    bbox_to_anchor=(0.5, 1.05), ncol=3)
         plt.gca().yaxis.set_major_locator(ticker.MultipleLocator(20))
         plt.gca().xaxis.set_major_locator(ticker.MultipleLocator(10))
-        savefig(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ".png")
+        path = OUT_DIR
+        if not (os.path.exists(path)):
+ 	    os.makedirs(path)
+        savefig(path+'/'+ str(int(time.time())) + ".png")
 
 
 def main():
@@ -106,9 +109,7 @@ def main():
     file_job = open(job_text, 'r')
     for job_id in file_job:
         job_id = job_id.strip()
-        print job_id
         draw_data = log_data.process(job_id)
-        print draw_data
         draw_test.draw(draw_data, job_id)
     file_job.close()
     draw_test.save()

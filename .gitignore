@@ -3,7 +3,9 @@
 *.pyc
 old/
 pic/
+output_pic/
 tmp.json
 *.png
 output/
 test/
+ids
