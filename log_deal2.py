@@ -131,10 +131,10 @@ class LogDealer:
         for i in phase:
             ans[i["phase"]][i["status"]] = (i["timestamp"] - self.min) / 1000
         for i in ans:
-            if ans[i] == {}:
+            if ans[i] == {} or len(ans[i]) != 2:
                 ans[i] = None
             else:
-                ans[i] = [ans[i]["start"], ans[i]["end"]]
+                ans[i] = [ans[i]["start"], ans[i]["stop"]]
         return ans
 
     # process log file line
