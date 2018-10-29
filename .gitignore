@@ -1,0 +1,9 @@
+*.swo
+*.swp
+*.pyc
+old/
+pic/
+tmp.json
+*.png
+output/
+test/
