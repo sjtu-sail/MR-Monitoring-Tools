@@ -134,7 +134,7 @@ class LogDealer:
             if ans[i] == {}:
                 ans[i] = None
             else:
-                ans[i] = [ans[i]["start"], ans[i]["stop"]]
+                ans[i] = [ans[i]["start"], ans[i]["end"]]
         return ans
 
     # process log file line
