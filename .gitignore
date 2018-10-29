@@ -9,3 +9,8 @@ tmp.json
 output/
 test/
 ids
+
+.idea/
+venv/
+__pycache__/
+log/
