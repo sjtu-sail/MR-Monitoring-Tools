@@ -151,7 +151,7 @@ class LogDealer:
 
 if __name__ == '__main__':
     log = LogDealer()
-    log.load_dirs("./log")
+    log.load_dirs()
     t = log.get_output()
     print(t)
     # print
