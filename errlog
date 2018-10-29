@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/root/byWind/collector/draw.py", line 122, in <module>
+    main()
+  File "/root/byWind/collector/draw.py", line 112, in main
+    draw_data = log_data.process(job_id)
+  File "/root/byWind/collector/log_deal2.py", line 149, in process
+    return self.get_output()
+  File "/root/byWind/collector/log_deal2.py", line 117, in get_output
+    ans[job][node][task] = self.get_phase(self.logs[job][node][task])
+  File "/root/byWind/collector/log_deal2.py", line 137, in get_phase
+    ans[i] = [ans[i]["start"], ans[i]["stop"]]
+KeyError: 'stop'

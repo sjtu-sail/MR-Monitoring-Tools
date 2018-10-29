@@ -109,6 +109,7 @@ def main():
     file_job = open(job_text, 'r')
     for job_id in file_job:
         job_id = job_id.strip()
+	#print job_id
         draw_data = log_data.process(job_id)
         draw_test.draw(draw_data, job_id)
     file_job.close()

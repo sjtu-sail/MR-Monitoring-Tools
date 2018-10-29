@@ -114,6 +114,7 @@ class LogDealer:
             for node in self.logs[job]:
                 ans[job][node] = {}
                 for task in self.logs[job][node]:
+		    #print job,node,task
                     ans[job][node][task] = self.get_phase(self.logs[job][node][task])
         self.output = ans
         return ans
