@@ -32,6 +32,7 @@ class LogDealer:
         self.logs = {}
         self.output = None
         self.min = sys.maxsize
+        self.max = 0
 
     def load_job(self, job_id, log_dir=log_def["log_dir"]):
         """
@@ -143,11 +144,12 @@ class LogDealer:
         s = s.split(" ")[-1].split("-")
         ans = {"timestamp": int(s[1].strip()), "phase": s[3].strip(), "status": s[4].strip()}
         self.min = min(self.min, ans["timestamp"])
+        self.max = max(self.max,ans["timestamp"])
         return s[2], ans
 
     def process(self, job_id):
         self.load_job(job_id)
-        return self.get_output()
+        return self.get_output(),(self.max - self.min )/1000
 
 
 if __name__ == '__main__':
