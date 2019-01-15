@@ -1,5 +1,5 @@
 work() {
-	host=root@192.168.2.1$1
+	host=root@ist-slave$1
 	tmp_file="/tmp/$2-$1"
 	ssh $host 'bash -s' < /root/byWind/collector/work_hc.sh $2 ${tmp_file}
 	scp $host:$tmp_file /root/byWind/collector/output/
