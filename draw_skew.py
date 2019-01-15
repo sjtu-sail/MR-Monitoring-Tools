@@ -63,9 +63,11 @@ if __name__ == '__main__':
     file_ids = open(app_ids,'r')
     for id in file_ids:
         app_name = id
-
+	
     log = LogDealer()
-    log.get_files("output_skew",app_name)
+    app_name = app_name.strip()
+    log.get_files("./output_skew/",app_name)
+    #print log.logs
     img = ExecutedDraw()
 
     file_sub = ""

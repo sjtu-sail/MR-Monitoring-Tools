@@ -17,12 +17,16 @@ class LogDealer:
     def get_files(self,dirs,appname):
         for i, j, k in os.walk(dirs):
             for file in k:
-                if file.find(appname) != -1:
+		#print file,appname
+                if file.find(appname) >=0:
+		   # print "start"
                     res = self.get_logs(os.path.join(i, file))
                     flist = file.split('-')
                     node =int(flist[-1])-1
                     self.node2log[node] = res
-
+		   #print "OK"
+		#else:
+		   # print file.find(appname)
         # process log file line
     def line_process(self, s):
         s = s.split("OPS:")[-1].strip().strip('[').strip(']')

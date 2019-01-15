@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/root/byWind/collector/draw_skew.py", line 75, in <module>
+    img.draw(log)
+  File "/root/byWind/collector/draw_skew.py", line 28, in draw
+    self.agg[obj["key"]] +=  obj["size"]
+IndexError: index 32 is out of bounds for axis 0 with size 32

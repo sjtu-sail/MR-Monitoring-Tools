@@ -8,17 +8,16 @@ work() {
 work_skew(){
     host=root@192.168.2.1$1
 	tmp_file="/tmp/$2-$1"
-	ssh $host 'bash -s' < /root/byWind/collector/work_hc.sh $2 ${tmp_file}
+	ssh $host 'bash -s' < /root/byWind/collector/work_hc_skew.sh $2 ${tmp_file}
 	scp $host:$tmp_file /root/byWind/collector/output_skew/
 	ssh $host "rm -f $tmp_file"
 }
 
 deal_single() {
-    if [[ -n "$2" ]] then
+    if [[ -n "$2" ]]; then
         for((i=1;i<=4;i++)); do
 		    work_skew $i $1
 	    done
-    fi
     else
     	for((i=1;i<=4;i++)); do
 		    work $i $1
