@@ -9,6 +9,7 @@ tmp.json
 output/
 test/
 ids
+errlog
 
 .idea/
 venv/

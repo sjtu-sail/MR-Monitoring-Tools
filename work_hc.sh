@@ -1,6 +1,6 @@
 # arg1: app_id
 # arg2: output_filepath
-dir_path=/home/root/dir/nodemanager/tmp/application_$1
+dir_path=/root/log/nodemanager/$1
 
 tmp_file=${2}
 if [ -e $tmp_file ]; then

@@ -2,7 +2,7 @@ work() {
 	host=root@192.168.2.1$1
 	tmp_file="/tmp/$2-$1"
 	ssh $host 'bash -s' < /root/byWind/collector/work_hc.sh $2 ${tmp_file}
-	scp $host:$tmp_file /root/byWind/collector/output/
+	scp $host:$tmp_file /root/byWind/collector/skew_output/
 	ssh $host "rm -f $tmp_file"
 }
 
@@ -30,12 +30,12 @@ done
 echo
 echo "pull log files finished."
 
-python /root/byWind/collector/draw.py $ids_file 2>errlog
+#python /root/byWind/collector/draw.py $ids_file 2>errlog
 
-if [ $? != 0 ]; then
-	echo "error when drawing picture. view errlog for more infomation."
-else
-	echo "picture saved!"
-	echo "done."
-fi
+#if [ $? != 0 ]; then
+#	echo "error when drawing picture. view errlog for more infomation."
+#else
+#	echo "picture saved!"
+#	echo "done."
+#fi
 

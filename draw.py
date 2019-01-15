@@ -20,13 +20,6 @@ class ExecutedDraw:
     map_line_styles = ['-', '--', '-.', ':']
     map_id_num = {}
     count = 0
-
-    def __init__(self):
-        xlabel("Time(in seconds)")
-        ylabel("Task slots")
-        title("Test")
-        grid(True, linestyle='-.')
-
     def map_draw(self, slot, dots):
         if dots is None:
             return
