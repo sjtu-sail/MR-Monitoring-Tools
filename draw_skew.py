@@ -16,11 +16,16 @@ OUT_DIR = './output_pic'
 class ExecutedDraw:
     waves_color = ["blue"]
     map_line_styles = ['-', '--', '-.', ':']
-    agg = np.zeros(32,dtype=int)
-    node_agg = np.zeros(4,dtype=int)
+    agg =[]
+    node_agg = np.zeros(4,dtype=long)
 
 
     def draw(self,loger):
+        max_key = 0
+        for obj in loger.logs:
+            if  obj["key"] > max_key:
+                max_key = obj["key"]
+        self.agg =np.zeros(max_key+1,dtype= long)
         xlabel("Slots")
         ylabel("TotalSize")
         title("Test")
