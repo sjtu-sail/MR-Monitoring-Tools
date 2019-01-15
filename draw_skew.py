@@ -1,4 +1,7 @@
 import numpy as np
+import matplotlib as mpl
+
+mpl.use('Agg')
 from matplotlib.pyplot import xlabel, ylabel, title, grid, plot, savefig
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
@@ -42,26 +45,34 @@ class ExecutedDraw:
 
 
 
-    def save(self):
-        # plt.legend([self.l_map, self.l_reduce, self.l_shuffle], ['map', 'reduce', 'shuffle'], loc='center',
-        #            bbox_to_anchor=(0.5, 1.105), ncol=3)
-        # plt.gca().yaxis.set_major_locator(ticker.MultipleLocator((self.count / 10) - (self.count / 10) % 10))
-        # plt.gca().xaxis.set_major_locator(ticker.MultipleLocator((maxsize / 10) - (maxsize / 10) % 10))
-        # plt.figure(figsize=(10, 8))
-        # plt.subplots_adjust(left=0.09, right=1, wspace=0.25, hspace=0.25, bottom=0.13, top=0.91)
-        # plt.show()
+    def save(self,name):
         path = OUT_DIR
         if not (os.path.exists(path)):
             os.makedirs(path)
-        savefig(path + '/' + str(int(time.time()))+"_skew" + ".png")
+        savefig(path + '/' + str(int(time.time()))+"_"+name + ".png")
 
 
 
 if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print "usage: python draw_skew.py ids_file draw_type"
+        exit(1)
+    app_ids= sys.argv[1]
+    draw_type= int(sys.argv[2])
+    app_name = ""
+    file_ids = open(app_ids,'r')
+    for id in file_ids:
+        app_name = id
+
     log = LogDealer()
-    log.get_files("output")
+    log.get_files("output_skew",app_name)
     img = ExecutedDraw()
 
-    # img.draw(log)
-    img.draw_node(log)
-    img.save()
+    file_sub = ""
+    if draw_type == 1:
+        img.draw(log)
+        file_sub="skew_tasks"
+    else:
+        img.draw_node(log)
+        file_sub = "skew_nodes"
+    img.save(file_sub)

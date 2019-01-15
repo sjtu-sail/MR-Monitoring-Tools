@@ -14,13 +14,14 @@ class LogDealer:
                 node_logs.append(self.line_process(s))
         self.logs = self.logs+node_logs
         return  node_logs
-    def get_files(self,dirs):
+    def get_files(self,dirs,appname):
         for i, j, k in os.walk(dirs):
             for file in k:
-                res = self.get_logs(os.path.join(i, file))
-                flist = file.split('-')
-                node =int(flist[-1])-1
-                self.node2log[node] = res
+                if file.find(appname) != -1:
+                    res = self.get_logs(os.path.join(i, file))
+                    flist = file.split('-')
+                    node =int(flist[-1])-1
+                    self.node2log[node] = res
 
         # process log file line
     def line_process(self, s):
@@ -29,7 +30,3 @@ class LogDealer:
         ans = {"key": int(lists[0]),"offset": int(lists[1]),"size":int(lists[2])}
         return ans
 
-if __name__ == '__main__':
-    log = LogDealer()
-    log.get_files("output")
-    print (log.logs)
