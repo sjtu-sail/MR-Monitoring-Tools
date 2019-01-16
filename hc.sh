@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 work() {
 	host=root@ist-slave$1
 	tmp_file="/tmp/$2-$1"
