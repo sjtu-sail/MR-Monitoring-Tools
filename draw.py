@@ -1,8 +1,8 @@
 # import matplotlib.pypot as plt
 import numpy as np
-import matplotlib as mpl
-
-mpl.use('Agg')
+# import matplotlib as mpl
+#
+# mpl.use('Agg')
 from matplotlib.pyplot import xlabel, ylabel, title, grid, plot, savefig
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
@@ -65,15 +65,19 @@ class ExecutedDraw:
 
         plt.legend([self.l_map, self.l_reduce, self.l_shuffle], ['map', 'reduce', 'shuffle'], loc='center',
                    bbox_to_anchor=(0.5, 1.105), ncol=3)
-        plt.gca().yaxis.set_major_locator(ticker.MultipleLocator((self.count / 10)-(self.count/10) %10))
+        base = (self.count / 10)-(self.count/10) %10
+        if   self.count<=100:
+            base = 10
+        # plt.gca().yaxis.set_major_locator(ticker.MultipleLocator((self.count / 10)-(self.count/10) %10))
+        plt.gca().yaxis.set_major_locator(ticker.MultipleLocator(base))
         plt.gca().xaxis.set_major_locator(ticker.MultipleLocator((maxtime / 10)-(maxtime/10)%10))
-        plt.figure(figsize=(10, 8))
-        plt.subplots_adjust(left=0.09, right=1, wspace=0.25, hspace=0.25, bottom=0.13, top=0.91)
-       # plt.show()
+        # plt.figure(figsize=(10, 8))
+        # plt.subplots_adjust(left=0.09, right=1, wspace=0.25, hspace=0.25, bottom=0.13, top=0.91)
         path = OUT_DIR
         if not (os.path.exists(path)):
             os.makedirs(path)
-        savefig(path + '/' + str(int(time.time())) + ".png")
+        plt.savefig(path + '/' + str(int(time.time())) + ".png")
+        # plt.show()
 
 
 def main():
@@ -93,8 +97,9 @@ def main():
         # print job_id
         draw_data,max_time = log_data.process(job_id)
         draw_test.draw(draw_data, job_id)
-    file_job.close()
     draw_test.save(max_time)
+    file_job.close()
+
 
 
 # draw_data = log_data.process(job_id)
