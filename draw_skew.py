@@ -41,7 +41,8 @@ class ExecutedDraw:
         for node,list in loger.node2log.items():
             i = node
             for obj in list:
-                self.node_agg[i] += obj["size"]
+                self.node_agg[i] = obj["size"]
+
         self.node_agg = sorted(self.node_agg,reverse = True)
         plt.bar(range(len(self.node_agg)), self.node_agg, fc='r')
         plt.show()
