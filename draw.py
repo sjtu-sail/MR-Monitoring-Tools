@@ -1,8 +1,8 @@
 # import matplotlib.pypot as plt
 import numpy as np
-# import matplotlib as mpl
-#
-# mpl.use('Agg')
+import matplotlib as mpl
+
+mpl.use('Agg')
 from matplotlib.pyplot import xlabel, ylabel, title, grid, plot, savefig
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
