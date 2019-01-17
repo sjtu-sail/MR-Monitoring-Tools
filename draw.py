@@ -61,7 +61,7 @@ class ExecutedDraw:
                         self.map_draw(tasknum, phase_list["map"])
                         self.shuffle_draw(tasknum, phase_list["shuffle"])
                         self.reduce_draw(tasknum, phase_list["reduce"])
-                    plt.hlines(self.count+0.5, 0, maxtime, colors = "r", linestyles = "dashed")
+                    plt.hlines(self.count+0.5, 0, maxtime, colors = "r")
                     texty= (self.count-last_node)/2 +last_node
                     plt.text(maxtime,texty,"Node%(num)s"%{'num':node},fontsize=12)
                     last_node = self.count
