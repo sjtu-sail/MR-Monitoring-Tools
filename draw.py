@@ -46,7 +46,8 @@ class ExecutedDraw:
             slots[i] = slot
         self.l_shuffle, = plot(dots, slots, lw=1, linestyle='-', color='brown', marker='|')
 
-    def draw(self, containers, jobid):
+    def draw(self, containers, jobid,maxtime):
+        last_node =0
         for job, node_list in containers.items():
             if job == jobid:
                 for node, task_list in node_list.items():
@@ -60,7 +61,10 @@ class ExecutedDraw:
                         self.map_draw(tasknum, phase_list["map"])
                         self.shuffle_draw(tasknum, phase_list["shuffle"])
                         self.reduce_draw(tasknum, phase_list["reduce"])
-
+                    plt.hlines(self.count+0.5, 0, maxtime, colors = "r", linestyles = "dashed")
+                    texty= (self.count-last_node)/2 +last_node
+                    plt.text(maxtime,texty,"Node%(num)s"%{'num':node},fontsize=12)
+                    last_node = self.count
     def save(self,maxtime):
 
         plt.legend([self.l_map, self.l_reduce, self.l_shuffle], ['map', 'reduce', 'shuffle'], loc='center',
@@ -96,7 +100,7 @@ def main():
         job_id = job_id.strip()
         # print job_id
         draw_data,max_time = log_data.process(job_id)
-        draw_test.draw(draw_data, job_id)
+        draw_test.draw(draw_data, job_id,max_time)
     draw_test.save(max_time)
     file_job.close()
 
