@@ -19,6 +19,24 @@ import sys
         },
         job_2:{}, ...
     }
+    
+    internal log structure
+    {
+        job_1:{
+            node_1:{
+                task_1:{
+                    "map":[
+                        begin_time, end_time
+                    ],
+                    "shuffle":[...],   //if it is lack of properties, its value is `None` 
+                    "reduce":[...]
+                },
+                task_2:{}, ...
+            },
+            node_2:{}, ...
+        },
+        job_2:{}, ...
+    }
 '''
 log_def = {
     "phase_name": ["map", "reduce", "shuffle"],
@@ -69,6 +87,13 @@ class LogDealer:
         self.load_content(log_dir + job_id + "-" + node_id, node_id, job_id)
 
     def load_content(self, filename, node_id, job_id):
+        """
+        load content from file
+        :param filename:
+        :param node_id:
+        :param job_id:
+        :return:
+        """
         node_logs = []
         cnt = 0
         self.output = None
@@ -139,6 +164,11 @@ class LogDealer:
 
     # process log file line
     def line_process(self, s):
+        """
+        process line, extract phase info from it and compute minimal timestamp.
+        :param s:
+        :return:
+        """
         s = s.split(" ")[-1].split("-")
         ans = {"timestamp": int(s[1].strip()), "phase": s[3].strip(), "status": s[4].strip()}
         self.min = min(self.min, ans["timestamp"])
