@@ -11,20 +11,15 @@ import sys
 import getopt
 import time
 import os
-OUT_DIR='./output_pic'
+
+OUT_DIR = './output_pic'
+
 
 class ExecutedDraw:
     waves_color = ["blue"]
     map_line_styles = ['-', '--', '-.', ':']
     map_id_num = {}
     count = 0
-
-    def __init__(self):
-        xlabel("Time(in seconds)")
-        ylabel("Task slots")
-        title("Test")
-        grid(True, linestyle='-.')
-
     def map_draw(self, slot, dots):
         if dots is None:
             return
@@ -51,7 +46,8 @@ class ExecutedDraw:
             slots[i] = slot
         self.l_shuffle, = plot(dots, slots, lw=1, linestyle='-', color='brown', marker='|')
 
-    def draw(self, containers, jobid):
+    def draw(self, containers, jobid,maxtime):
+        last_node =0
         for job, node_list in containers.items():
             if job == jobid:
                 for node, task_list in node_list.items():
@@ -65,54 +61,49 @@ class ExecutedDraw:
                         self.map_draw(tasknum, phase_list["map"])
                         self.shuffle_draw(tasknum, phase_list["shuffle"])
                         self.reduce_draw(tasknum, phase_list["reduce"])
-        # plt.xticks(np.linspace(-1, 1, 5))
-        # plt.yticks(np.linspace(-1, 1, 5))
-        # plt.legend([self.l_map, self.l_reduce, self.l_shuffle], ['map', 'reduce', 'shuffle'], loc='upper center')
-
-    # plt.gca().yaxis.set_major_locator(ticker.MultipleLocator(20))
-    # plt.gca().xaxis.set_major_locator(ticker.MultipleLocator(500))
-    # savefig(str(jobid) + ".png")
-
-    # show()
-
-    def save(self):
+                    plt.hlines(self.count+0.5, 0, maxtime, colors = "r")
+                    texty= (self.count-last_node)/2 +last_node
+                    plt.text(maxtime,texty,"Node%(num)s"%{'num':node},fontsize=12)
+                    last_node = self.count
+    def save(self,maxtime):
 
         plt.legend([self.l_map, self.l_reduce, self.l_shuffle], ['map', 'reduce', 'shuffle'], loc='center',
-                   bbox_to_anchor=(0.5, 1.05), ncol=3)
-        plt.gca().yaxis.set_major_locator(ticker.MultipleLocator(20))
-        plt.gca().xaxis.set_major_locator(ticker.MultipleLocator(10))
+                   bbox_to_anchor=(0.5, 1.105), ncol=3)
+        base = (self.count / 10)-(self.count/10) %10
+        if   self.count<=100:
+            base = 10
+        # plt.gca().yaxis.set_major_locator(ticker.MultipleLocator((self.count / 10)-(self.count/10) %10))
+        plt.gca().yaxis.set_major_locator(ticker.MultipleLocator(base))
+        plt.gca().xaxis.set_major_locator(ticker.MultipleLocator((maxtime / 10)-(maxtime/10)%10))
+        # plt.figure(figsize=(10, 8))
+        # plt.subplots_adjust(left=0.09, right=1, wspace=0.25, hspace=0.25, bottom=0.13, top=0.91)
         path = OUT_DIR
         if not (os.path.exists(path)):
- 	    os.makedirs(path)
-        savefig(path+'/'+ str(int(time.time())) + ".png")
+            os.makedirs(path)
+        plt.savefig(path + '/' + str(int(time.time())) + ".png")
+        # plt.show()
 
 
 def main():
-    # filename = ''
-    # job_id = ''
-    # opts, args = getopt.getopt(sys.argv[1:], '-h-v', ['help', 'version'])
-    # for opt_name, opt_value in opts:
-    #     if opt_name in ('-h', '--help'):
-    #         print("[*] Help info")
-    #         exit()
-    #     if opt_name in ('-v', '--version'):
-    #         print("[*] Version is 0.01 ")
-    #         exit()
+
 
     if len(sys.argv) != 2:
         print "error: missing parameter: job_id"
         exit(1)
     job_text = sys.argv[1]
 
+    max_time=0
     log_data = LogDealer()
     draw_test = ExecutedDraw()
     file_job = open(job_text, 'r')
     for job_id in file_job:
         job_id = job_id.strip()
-        draw_data = log_data.process(job_id)
-        draw_test.draw(draw_data, job_id)
+        # print job_id
+        draw_data,max_time = log_data.process(job_id)
+        draw_test.draw(draw_data, job_id,max_time)
+    draw_test.save(max_time)
     file_job.close()
-    draw_test.save()
+
 
 
 # draw_data = log_data.process(job_id)

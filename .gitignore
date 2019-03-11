@@ -7,8 +7,10 @@ output_pic/
 tmp.json
 *.png
 output/
+output_skew/
 test/
 ids
+errlog
 
 .idea/
 venv/

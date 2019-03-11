@@ -10,7 +10,7 @@ touch $tmp_file
 
 for dir in `ls $dir_path`; do 
 	if [ -d $dir_path/$dir ]; then
-		cat $dir_path/$dir/syslog | grep -F "[IST]" >> $tmp_file
+		cat $dir_path/$dir/syslog | grep -F "OPS" >> $tmp_file
 	fi
 done
 
