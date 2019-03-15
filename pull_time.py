@@ -24,7 +24,8 @@ class TimePuller:
         else:
             return 0
 
-    def process_properties(self, raw_str):
+    @staticmethod
+    def process_properties(raw_str):
         s = raw_str.split("\n\t")
         if len(s) < 3:
             return {}
