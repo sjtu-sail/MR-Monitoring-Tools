@@ -1,0 +1,14 @@
+{
+    "title": "This is title",
+    "interval": [1, 2, 3, 4],
+    "data": [
+        {
+            "name": "node1",
+            "value": [9, 9, 9, 9]
+        },
+        {
+            "name": "node2",
+            "value": [1, 2, 3, 4]
+        }
+    ]
+}

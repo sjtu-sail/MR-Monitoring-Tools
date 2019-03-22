@@ -1,16 +1,19 @@
 #!/usr/bin/env bash
+export COLLECTOR_HOME="/home/wuchunghsuan/MR-Monitoring-Tools"
+ids_file=${1##*/}
+ids_file="$COLLECTOR_HOME/$ids_file"
 work() {
 	host=root@ist-slave$1
 	tmp_file="/tmp/$2-$1"
-	ssh $host 'bash -s' < /root/byWind/collector/work_hc.sh $2 ${tmp_file}
-	scp $host:$tmp_file /root/byWind/collector/output/
+	ssh $host 'bash -s' < $COLLECTOR_HOME/work_hc.sh $2 ${tmp_file}
+	scp $host:$tmp_file $COLLECTOR_HOME/output/
 	ssh $host "rm -f $tmp_file"
 }
 work_skew(){
     host=root@192.168.2.1$1
 	tmp_file="/tmp/$2-$1"
-	ssh $host 'bash -s' < /root/byWind/collector/work_hc_skew.sh $2 ${tmp_file}
-	scp $host:$tmp_file /root/byWind/collector/output_skew/
+	ssh $host 'bash -s' < $COLLECTOR_HOME/work_hc_skew.sh $2 ${tmp_file}
+	scp $host:$tmp_file $COLLECTOR_HOME/output_skew/
 	ssh $host "rm -f $tmp_file"
 }
 
@@ -33,8 +36,8 @@ if [ -z $1 ]; then
 	exit 1
 fi
 
-ids_file=${1##*/}
-ids_file="/root/byWind/collector/$ids_file"
+#ids_file=${1##*/}
+#ids_file="$COLLECTOR_HOME/$ids_file"
 echo "debug: $ids_file"
 
 for app_id in $(cat $ids_file); do
@@ -47,9 +50,9 @@ echo
 echo "pull log files finished."
 
 if [[ -n "$2" ]]; then
-    python /root/byWind/collector/draw_skew.py $ids_file $2  2>errlog
+    python $COLLECTOR_HOME/draw_skew.py $ids_file $2  2>errlog
 else
-    python /root/byWind/collector/draw.py $ids_file 2>errlog
+    python $COLLECTOR_HOME/draw.py $ids_file 2>errlog
 fi
 
 if [ $? != 0 ]; then
