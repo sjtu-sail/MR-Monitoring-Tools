@@ -101,6 +101,7 @@ def main():
         # print job_id
         draw_data,max_time = log_data.process(job_id)
         draw_test.draw(draw_data, job_id,max_time)
+	break
     draw_test.save(max_time)
     file_job.close()
 

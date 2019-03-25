@@ -40,7 +40,7 @@ import sys
 '''
 log_def = {
     "phase_name": ["map", "reduce", "shuffle"],
-    "node_name": ["1", "2", "3", "4"],
+    "node_name": ["2", "3", "4", "5","6","7"],
     "log_dir": "./output/"
 }
 

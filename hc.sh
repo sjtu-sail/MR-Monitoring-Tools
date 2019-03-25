@@ -19,11 +19,11 @@ work_skew(){
 
 deal_single() {
     if [[ -n "$2" ]]; then
-        for((i=1;i<=4;i++)); do
+        for((i=1;i<=7;i++)); do
 		    work_skew $i $1
 	    done
     else
-    	for((i=1;i<=4;i++)); do
+    	for((i=1;i<=7;i++)); do
 		    work $i $1
 	    done
     fi
