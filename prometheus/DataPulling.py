@@ -3,7 +3,7 @@ import os
 import numpy as np
 import json
 
-#base_url = "http://202.120.40.4:19090/api/v1/query_range"
+# base_url = "http://202.120.40.4:19090/api/v1/query_range"
 base_url = "http://192.168.22.18:9090/api/v1/query_range"
 node_list = ["192.168.22.11", "192.168.22.12"]
 default_port = "9100"
@@ -31,11 +31,11 @@ def send_request(url, params):
 
 def prom_query(type, id):
     node = id + ":" + default_port
-    q_node = "{instance='" + node + "',job='hadoop'}"
+    q_node = "{instance='" + node + "'}"
     if type == 'cpu':
-        q_node = "{instance='" + node + "',mode='idle',job='hadoop'}"
+        q_node = "{instance='" + node + "',mode='idle'}"
     if type == 'net':
-        q_node = "{instance=~'" + node + "',device!~'tap.*',job = 'hadoop'}"
+        q_node = "{instance=~'" + node + "',device!~'tap.*'}"
     result = type_dict[type].format(q_node)
     return result
 

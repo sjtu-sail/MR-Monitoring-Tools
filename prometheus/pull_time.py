@@ -11,8 +11,8 @@ import sys
 
 
 class TimePuller:
-    begin_time = 0
-    end_time = sys.maxsize
+    begin_time = sys.maxsize
+    end_time = 0
     nodes = ["2", "3", "4", "5", "6", "7"]
 
     def __init__(self):
@@ -22,8 +22,8 @@ class TimePuller:
         for i in self.nodes:
             with open("/home/wuchunghsuan/MR-Monitoring-Tools/output/" + raw_id + "-" + i, "r") as f:
                 raw_str = f.readlines()
-                self.begin_time = max(self.begin_time,self.process_properties(raw_str[0]))
-                self.end_time = min(self.end_time, self.process_properties(raw_str[-1]))
+                self.begin_time = min(self.begin_time,self.process_properties(raw_str[0]))
+                self.end_time = max(self.end_time, self.process_properties(raw_str[-1]))
         if self.begin_time == 0:
             return -1
         else:
